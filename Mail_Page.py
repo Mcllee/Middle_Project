@@ -7,7 +7,7 @@ import Main_Page as mp
 import Log_in_Page as lip
 
 
-def delete_fc(next_page):
+def delete_mc(next_page):
     pass  # place_forget
 
     match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
@@ -17,12 +17,12 @@ def delete_fc(next_page):
             mp.Main_Page_set()
 
 
-class file_creater:
+class mail_creater:
     #  윈도우 위젯 선언
 
     @staticmethod
-    def set_fc(input_name):
+    def set_mc(input_name):
         mp.page_address.delete(0, END)
-        mp.page_address.insert(0, f"파일 제작소에 어서오세요! {input_name}님!")
+        mp.page_address.insert(0, f"메일 시스템에 어서오세요! {input_name}님!")
 
-        mp.back_page_btn.config(command=lambda: [delete_fc(1)])
+        mp.back_page_btn.config(command=lambda: [delete_mc(1)])

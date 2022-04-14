@@ -2,6 +2,7 @@ from Window_set import *
 from file_Loader import *
 import Sign_Up_Page as sup
 import Log_in_Page as lip
+import Sudoku_Page as sp
 
 main_win_back_image = ImageTk.PhotoImage(mbg_image)
 bg_image = Label(win_root, image=main_win_back_image)
@@ -24,8 +25,8 @@ def all_delete_main(page_num):
     Log_in_btn.place_forget()
     log_Out_btn.place_forget()
     Qite_btn.place_forget()
-    forward_page_btn.place_forget()
-    back_page_btn.place_forget()
+    # forward_page_btn.place_forget()
+    # back_page_btn.place_forget()
 
     if page_num == 1:
         sup.set_sign_up_page()
@@ -34,6 +35,8 @@ def all_delete_main(page_num):
             lip.set_log_in_page(id_in_txt.get())
         else:
             lip.set_log_in_page('아이디를 잊어버린 학생')
+    elif page_num == 3:
+        sp.sudoku_creater.set_sp(user_name)
 
 
 def quit_win():
@@ -45,6 +48,10 @@ def main_page_button():
     lip.delete_log_in_page(0)
 
 
+def entry_clear():
+    id_in_txt.delete(0, END)
+    pasw_in_txt.delete(0, END)
+
 id_in_txt = Entry(win_root)
 id_in_txt.insert(0, '아이디')
 
@@ -55,12 +62,12 @@ Sign_Up_btn = Button(win_root, text='회원가입', command=lambda: all_delete_m
 
 Log_in_btn = Button(win_root, text='로그인', command=lambda: all_delete_main(2))
 
-log_Out_btn = Button(win_root, text='로그아웃')
+log_Out_btn = Button(win_root, text='로그아웃', command=entry_clear)
 
 Qite_btn = Button(win_root, text='종료', command=quit_win)
 
-forward_page_btn = Button(win_root, text='뒤로가기', command=DISABLED)
-back_page_btn = Button(win_root, text='앞으로', command=DISABLED)
+forward_page_btn = Button(win_root, text='뒤로가기', command=lambda: all_delete_main(3))
+back_page_btn = Button(win_root, text='앞으로', command=lambda: all_delete_main(3))
 
 page_address = Entry(win_root, width=800)
 page_address.insert(0, 'https://www.Krome.com')
