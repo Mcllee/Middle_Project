@@ -4,6 +4,9 @@ import Sign_Up_Page as sup
 import Log_in_Page as lip
 import Sudoku_Page as sp
 
+import shelve
+uif = shelve.open('userInf.dat')
+
 main_win_back_image = ImageTk.PhotoImage(mbg_image)
 bg_image = Label(win_root, image=main_win_back_image)
 
@@ -30,9 +33,26 @@ def all_delete_main(page_num):
 
     if page_num == 1:
         sup.set_sign_up_page()
-    elif page_num == 2:
+    elif page_num == 2:  # 로그인 버튼 선택
         if id_in_txt.get() != '아이디':
-            lip.set_log_in_page(id_in_txt.get())
+
+            print(uif)
+            input_name = ''
+
+            try:
+                input_name = uif[id_in_txt.get()]
+                if input_name == '비밀번호':
+                    raise KeyError
+                else:
+                    print(f"저장된 사용자 정보 - id: {id_in_txt.get()}, pass: {uif[id_in_txt.get()]}")
+                    lip.set_log_in_page(id_in_txt.get())
+
+                    forward_page_btn.place_forget()
+                    back_page_btn.place_forget()
+
+            except KeyError:
+                print(f"{input_name}은 틀린 아이디 혹은 비밀번호 입니다.")
+                Main_Page_set()
         else:
             lip.set_log_in_page('아이디를 잊어버린 학생')
     elif page_num == 3:

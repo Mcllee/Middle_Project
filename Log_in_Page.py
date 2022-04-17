@@ -8,6 +8,7 @@ import Object_Page as oc
 
 save_name = ''
 
+
 def set_log_in_page(user_name):
     global save_name
     save_name = user_name
@@ -37,8 +38,6 @@ def delete_log_in_page(next_page):
             mc.mail_creater.set_mc(save_name)
         case 3:
             oc.obj_viewer.set_ov(save_name)
-        case 4:
-            pass
 
 
 file_btn = Button(win_root, text='파일 제작하기', command=lambda: [delete_log_in_page(1)])
