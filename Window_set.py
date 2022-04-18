@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter.font as tkFont
+import tkinter.messagebox as msgbox  # 경고 메시지
 
 win_root = Tk()
 win_root.title("Krome")

@@ -51,7 +51,7 @@ def all_delete_main(page_num):
                     back_page_btn.place_forget()
 
             except KeyError:
-                print(f"{input_name}은 틀린 아이디 혹은 비밀번호 입니다.")
+                msgbox.showinfo("로그인 오류", "잘못된 아이디 혹은 비밀번호 입니다!")
                 Main_Page_set()
         else:
             lip.set_log_in_page('아이디를 잊어버린 학생')
@@ -64,6 +64,7 @@ def quit_win():
 
 
 def main_page_button():
+    sp.delete_sp()
     sup.delete_all_sign_up()
     lip.delete_log_in_page(0)
 
@@ -71,6 +72,11 @@ def main_page_button():
 def entry_clear():
     id_in_txt.delete(0, END)
     pasw_in_txt.delete(0, END)
+
+
+def log_out_success():
+    msgbox.showinfo("로그아웃", "로그아웃이 정상적으로 실행되었습니다.")
+
 
 id_in_txt = Entry(win_root)
 id_in_txt.insert(0, '아이디')
@@ -82,7 +88,7 @@ Sign_Up_btn = Button(win_root, text='회원가입', command=lambda: all_delete_m
 
 Log_in_btn = Button(win_root, text='로그인', command=lambda: all_delete_main(2))
 
-log_Out_btn = Button(win_root, text='로그아웃', command=entry_clear)
+log_Out_btn = Button(win_root, text='로그아웃', command=lambda: [entry_clear(), log_out_success()])
 
 Qite_btn = Button(win_root, text='종료', command=quit_win)
 

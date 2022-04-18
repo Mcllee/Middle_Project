@@ -5,7 +5,6 @@ from pygame.locals import *     # 파이게임 파일
 
 import random
 import pygame
-import os
 
 from Window_set import *    # 기본 윈도우 파일
 import Main_Page as mp      # 메인 페이지 파일
