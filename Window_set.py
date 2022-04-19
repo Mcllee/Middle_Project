@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.ttk import *
 import tkinter.font as tkFont
 import tkinter.messagebox as msgbox  # 경고 메시지
 
