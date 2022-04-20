@@ -10,6 +10,7 @@ def delete_sp():
     for hei in range(0, 9):
         for wid in range(0, 9):
             txt[hei][wid].place_forget()
+            label[hei][wid].place_forget()
     map_clear_btn.place_forget()
     new_game_btn.place_forget()
     check_game_btn.place_forget()
@@ -126,23 +127,14 @@ class sudoku_creater:
             label[hei][wid].config(font=sdFont)
 
 
-    # beg = 0
-    # beg_stack = 0
-    # for hei in range(0, 9):
-    #     for wid in range(0, 9):
-    #         txt[hei][wid].insert(END, (beg + wid) % 9 + 1)
-    #     beg += 3
-    #     if beg - beg_stack == 9:
-    #         beg_stack += 1
-    #         beg = beg_stack
-
-
     @staticmethod
     def set_sp(input_name):
         mp.page_address.delete(0, END)
         mp.page_address.insert(0, f"스도쿠 게임을 시작합니다! {input_name}님!")
 
-        # mp.back_page_btn.config(command=delete_sp)
+        mp.back_page_btn.config(command=delete_sp)
+        mp.forward_page_btn.config(command=delete_sp)
+
         for hei in range(0, 9):
             for wid in range(0, 9):
                 txt[hei][wid].place(x=380 + wid * 30, y=200 + hei * 30)

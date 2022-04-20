@@ -16,8 +16,8 @@ def set_log_in_page(user_name):
     mp.page_address.delete(0, END)
     mp.page_address.insert(0, '...//어서오세요! ' + str(user_name) + '님! 원하시는 작업을 선택해주세요!')
 
-    mp.forward_page_btn.config(command=lambda: [delete_log_in_page(0)])
-    mp.back_page_btn.config(command=DISABLED)
+    mp.back_page_btn.config(command=lambda: [delete_log_in_page(0)])
+    mp.forward_page_btn.config(command=DISABLED)
 
     file_btn.place(x=430, y=500, width=140, height=40)
     mail_btn.place(x=430, y=550, width=140, height=40)

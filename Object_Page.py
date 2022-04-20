@@ -115,3 +115,6 @@ class obj_viewer:
             pygame.time.wait(2)
 
         pygame.quit()
+
+        mp.back_page_btn.config(command=lambda: [delete_ov(1)])
+        mp.forward_page_btn.config(command=DISABLED)

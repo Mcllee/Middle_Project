@@ -1,3 +1,5 @@
+from tkinter import filedialog
+
 from Window_set import *    # 기본 윈도우 파일
 import Main_Page as mp      # 메인 페이지 파일
 import Log_in_Page as lip   # 로그인 페이지 파일
@@ -10,6 +12,8 @@ def delete_fc(next_page):
     memo_txt.place_forget()
     save_btn.place_forget()
     open_btn.place_forget()
+
+    win_root.config(menu=False)
 
     match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
         case 1:
@@ -42,6 +46,19 @@ memo_txt = Text(win_root, width=115, height=40)
 save_btn = Button(win_root, text="저장하기", command=save_txt)
 open_btn = Button(win_root, text="열어보기", command=open_txt)
 
+def open_file():
+    file_name = filedialog.askopenfilename(title='select a text file',
+                                           filetypes=(("text files (.txt)", "*.txt"), ("all files", "*.*")))
+
+menu = Menu()
+menu_file = Menu(menu, tearoff=False)
+menu_file.add_command(label='Open', command=open_file, accelerator='Ctrl+O')
+menu_file.add_command(label='Save File', accelerator='Ctrl+S', state=DISABLED)
+menu_file.add_separator()
+menu_file.add_command(label='Quit', accelerator='Ctrl+Q')
+
+menu.add_cascade(label='File', menu=menu_file)
+
 
 class file_creater:
     #  윈도우 위젯 선언
@@ -51,11 +68,13 @@ class file_creater:
         mp.page_address.delete(0, END)
         mp.page_address.insert(0, f"파일 제작소에 어서오세요! {input_name}님!")
 
-        mp.back_page_btn.config(command=lambda: [delete_fc(1)])  # 작동 오류: Log-in page의 back_page에서 변경하지 못함
+        mp.back_page_btn.configure(command=lambda: [delete_fc(1)])  # 작동 오류: Log-in page의 back_page에서 변경하지 못함
 
         memo_txt.place(x=100, y=100)
 
         save_btn.place(x=100, y=70)
-        open_btn.place(x=160, y=70)
+        open_btn.place(x=200, y=70)
+
+        win_root.config(menu=menu)
 
 

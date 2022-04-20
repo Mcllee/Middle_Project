@@ -92,8 +92,8 @@ log_Out_btn = Button(win_root, text='로그아웃', command=lambda: [entry_clear
 
 Qite_btn = Button(win_root, text='종료', command=quit_win)
 
-forward_page_btn = Button(win_root, text='뒤로가기', command=lambda: all_delete_main(3))
-back_page_btn = Button(win_root, text='앞으로', command=lambda: all_delete_main(3))
+forward_page_btn = Button(win_root, text='앞으로', command=lambda: all_delete_main(3))
+back_page_btn = Button(win_root, text='뒤로가기', command=lambda: all_delete_main(3))
 
 page_address = Entry(win_root, width=800)
 page_address.insert(0, 'https://www.Krome.com')
@@ -121,10 +121,13 @@ def Main_Page_set():
 
     Qite_btn.place(x=430, y=580, width=150, height=30)
 
-    forward_page_btn.place(x=0, y=0, width=60, height=30)
+    forward_page_btn.place(x=60, y=0, width=60, height=30)
 
-    back_page_btn.place(x=60, y=0, width=60, height=30)
+    back_page_btn.place(x=0, y=0, width=60, height=30)
 
     page_address.place(x=120, y=0, width=840, height=30)
 
     Main_page_btn.place(x=960, y=0, width=40, height=30)
+
+    back_page_btn.config(command=lambda: all_delete_main(3))
+    forward_page_btn.config(command=lambda: all_delete_main(3))

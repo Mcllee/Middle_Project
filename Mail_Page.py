@@ -26,3 +26,4 @@ class mail_creater:
         mp.page_address.insert(0, f"메일 시스템에 어서오세요! {input_name}님!")
 
         mp.back_page_btn.config(command=lambda: [delete_mc(1)])
+        mp.forward_page_btn.config(command=DISABLED)
