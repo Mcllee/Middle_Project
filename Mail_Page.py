@@ -1,6 +1,3 @@
-import os
-import pygame
-from OpenGL.GL import *
 from Window_set import *
 
 import Main_Page as mp
@@ -9,21 +6,12 @@ import Log_in_Page as lip
 import smtplib
 from email.mime.text import MIMEText  # 메일 제목과 내용을 설정하는 모듈
 
-
-def delete_mc(next_page):
-    sender_id_ent.place_forget()
-    sender_pw_ent.place_forget()
-    Recipient_id_ent.place_forget()
-    mail_title.place_forget()
-
-    send_message_btn.place_forget()
-    message_text.place_forget()
-
-    match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
-        case 1:
-            lip.set_log_in_page(lip.save_name)
-        case 2:
-            mp.Main_Page_set()
+message_text = Text(win_root, width=115, height=40)
+sender_id_ent = Entry(win_root, width=30)
+sender_pw_ent = Entry(win_root, width=30)
+Recipient_id_ent = Entry(win_root, width=30)
+mail_title = Entry(win_root, width=30)
+send_message_btn = Button(win_root, text="메일 보내기")
 
 
 def send_message():
@@ -58,20 +46,19 @@ def send_message():
     smtp.quit()
 
 
-message_text = Text(win_root, width=115, height=40)
-send_message_btn = Button(win_root, text="메일 보내기", command=send_message)
+def delete_mc(next_page):
+    sender_id_ent.place_forget()
+    sender_pw_ent.place_forget()
+    Recipient_id_ent.place_forget()
+    mail_title.place_forget()
+    send_message_btn.place_forget()
+    message_text.place_forget()
 
-sender_id_ent = Entry(win_root, width=30)
-sender_id_ent.insert(0, "송신자 메일 아이디")
-
-sender_pw_ent = Entry(win_root, width=30)
-sender_pw_ent.insert(0, "송신자 비밀 번호")
-
-Recipient_id_ent = Entry(win_root, width=30)
-Recipient_id_ent.insert(0, "수신자 메일 아이디")
-
-mail_title = Entry(win_root, width=30)
-mail_title.insert(0, "제목을 입력해주세요.")
+    match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
+        case 1:
+            lip.set_log_in_page(lip.save_name)
+        case 2:
+            mp.Main_Page_set()
 
 
 class mail_creater:
@@ -84,6 +71,7 @@ class mail_creater:
 
         mp.back_page_btn.config(command=lambda: [delete_mc(1)])
         mp.forward_page_btn.config(command=DISABLED)
+        send_message_btn.config(command=send_message)
 
         sender_id_ent.place(x=100, y=40)
         sender_pw_ent.place(x=100, y=80)
@@ -92,3 +80,13 @@ class mail_creater:
 
         message_text.place(x=100, y=100)
         send_message_btn.place(x=800, y=60)
+
+        sender_id_ent.delete(0, END)
+        sender_pw_ent.delete(0, END)
+        Recipient_id_ent.delete(0, END)
+        mail_title.delete(0, END)
+
+        sender_id_ent.insert(0, "송신자 메일 아이디")
+        sender_pw_ent.insert(0, "송신자 비밀 번호")
+        Recipient_id_ent.insert(0, "수신자 메일 아이디")
+        mail_title.insert(0, "제목을 입력해주세요.")

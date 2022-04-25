@@ -1,12 +1,24 @@
-from tkinter import *
 from Window_set import *
 import Main_Page as mp
-
 import random
+
+quest = 0
+level = 1
+quest_position = []
+
+#  윈도우 위젯 선언
+sdFont = tkFont.Font(family="Helvetica", size=35)
+label = [[0] * 9 for _ in range(9)]
+txt = [[0] * 9 for _ in range(9)]
+map_clear_btn = Button(win_root, text="모두 지우기")
+new_game_btn = Button(win_root, text="새 게임", command=lambda: new_game(level))
+check_game_btn = Button(win_root, text="정답 확인")
+level_1_btn = Button(win_root, text="Level 1", command=lambda: new_game(1))
+level_2_btn = Button(win_root, text="Level 2", command=lambda: new_game(2))
+level_3_btn = Button(win_root, text="Level 3", command=lambda: new_game(3))
 
 
 def delete_sp():
-    # place_forget
     for hei in range(0, 9):
         for wid in range(0, 9):
             txt[hei][wid].place_forget()
@@ -23,22 +35,37 @@ def delete_sp():
 def clear_all():
     for hei in range(0, 9):
         for wid in range(0, 9):
-            txt[hei][wid].delete("1.0", END)
+            txt[hei][wid].delete(0, END)
 
 
-quest = 0
-level = 1
-quest_position = []
-
-sdFont = tkFont.Font(family="Arial", size=16, weight="bold", slant="italic")
-label = [[0] * 9 for _ in range(9)]
-
-
-def game_level(input_level):
+def new_game(input_level):
+    global sdFont
+    global label
+    global quest
+    global level
     global quest_position
+
+    # 사용하지 않는 칸을 전부 지운다.
+    clear_all()
+
+    if level != input_level:
+        level = input_level
+    quest = 0
+
+    beg = 0
+    beg_stack = 0
+    for hei in range(0, 9):
+        for wid in range(0, 9):
+            label[hei][wid].configure(text=(str((beg + wid) % 9 + 1).center(3, ' ')), relief='solid')
+            label[hei][wid].place(x=(100 + wid * 58), y=(100 + hei * 58), height=58, width=58)
+        beg += 3
+        if beg - beg_stack == 9:
+            beg_stack += 1
+            beg = beg_stack
+
     quest_position.clear()
 
-    match input_level:
+    match level:
         case 1:
             for i in range(10):
                 quest_position.append([random.randint(0, 8), random.randint(0, 8)])
@@ -49,35 +76,11 @@ def game_level(input_level):
             for i in range(70):
                 quest_position.append([random.randint(0, 8), random.randint(0, 8)])
 
-
-def new_game(input_level):
-    global sdFont
-    global label
-    global quest
-    global level
-    global quest_position
-
-    if level != input_level:
-        level = input_level
-    quest = 0
-
-    beg = 0
-    beg_stack = 0
-    for hei in range(0, 9):
-        for wid in range(0, 9):
-            label[hei][wid].configure(text=(' ' + str((beg + wid) % 9 + 1)))
-            label[hei][wid].place(x=(380 + wid * 30), y=(200 + hei * 30), height=28, width=28)
-        beg += 3
-        if beg - beg_stack == 9:
-            beg_stack += 1
-            beg = beg_stack
-
-    game_level(level)
     for i in range(0, 10*level):
         label[quest_position[i][1]][quest_position[i][0]].place_forget()
-        txt[quest_position[i][1]][quest_position[i][0]].delete("1.0", END)
-        txt[quest_position[i][1]][quest_position[i][0]].place(x=(380 + quest_position[i][0] * 30),
-                                                              y=(200 + quest_position[i][1] * 30))
+        txt[quest_position[i][1]][quest_position[i][0]].delete(0, END)
+        txt[quest_position[i][1]][quest_position[i][0]].place(x=(100 + quest_position[i][0] * 58),
+                                                              y=(100 + quest_position[i][1] * 58))
         quest += 1  # 문제 수 증가
 
 
@@ -104,15 +107,7 @@ def check_game():
     else:
         msgbox.showinfo("실패!", f"아쉽군요! {success}개만 정답입니다.\n다시 도전하세요!")
 
-#  윈도우 위젯 선언
-txt = [[0] * 9 for _ in range(9)]
-map_clear_btn = Button(win_root, text="모두 지우기", command=clear_all)
-new_game_btn = Button(win_root, text="새 게임", command=lambda: new_game(level))
-check_game_btn = Button(win_root, text="정답 확인", command=check_game)
 
-level_1_btn = Button(win_root, text="Level 1", command=lambda: new_game(1))
-level_2_btn = Button(win_root, text="Level 2", command=lambda: new_game(2))
-level_3_btn = Button(win_root, text="Level 3", command=lambda: new_game(3))
 
 
 class sudoku_creater:
@@ -120,7 +115,7 @@ class sudoku_creater:
 
     for hei in range(0, 9):
         for wid in range(0, 9):
-            txt[hei][wid] = Text(win_root, width=2, height=1, padx=1, pady=1)
+            txt[hei][wid] = Entry(win_root, width=2, foreground='red', justify=CENTER)
             txt[hei][wid].configure(font=sdFont)
 
             label[hei][wid] = Label(win_root)
@@ -137,14 +132,16 @@ class sudoku_creater:
 
         for hei in range(0, 9):
             for wid in range(0, 9):
-                txt[hei][wid].place(x=380 + wid * 30, y=200 + hei * 30)
-                txt[hei][wid].delete("1.0", END)
-
+                txt[hei][wid].place(x=100 + wid * 58, y=100 + hei * 58)
+                txt[hei][wid].delete(0, END)
 
         map_clear_btn.place(x=610, y=510)
         new_game_btn.place(x=410, y=510)
         check_game_btn.place(x=510, y=510)
 
-        level_1_btn.place(x=700, y=300)
-        level_2_btn.place(x=700, y=400)
-        level_3_btn.place(x=700, y=500)
+        level_1_btn.place(x=900, y=300, width=100, height=50)
+        level_2_btn.place(x=900, y=400)
+        level_3_btn.place(x=900, y=500)
+
+        map_clear_btn.config(command=clear_all)
+        check_game_btn.config(command=check_game)

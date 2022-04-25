@@ -1,6 +1,6 @@
 from tkinter import *
-from tkinter.ttk import *
-import tkinter.font as tkFont
+from tkinter.ttk import *            # UpGrade tkinter
+import tkinter.font as tkFont        # 폰트 변경
 import tkinter.messagebox as msgbox  # 경고 메시지
 
 win_root = Tk()
