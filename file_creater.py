@@ -22,7 +22,7 @@ def delete_fc(next_page):
 
     match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
         case 1:
-            lip.set_log_in_page("")
+            lip.set_log_in_page(lip.save_name)
         case 2:
             mp.Main_Page_set()
 

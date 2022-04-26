@@ -2,14 +2,14 @@ from Window_set import *
 import Main_Page as mp
 import file_creater as fc
 import Mail_Page as mc
-import Object_Page as oc
+import Sudoku_Page as sp        # 스도쿠 페이지 이동
 
 # Main Page에서 받아온 사용자의 이름
 save_name = ''
 # 윈도우 위젯 선언
 file_btn = Button(win_root, text='파일 제작하기', command=lambda: [delete_log_in_page(1)])
 mail_btn = Button(win_root, text='메일 보내기', command=lambda: [delete_log_in_page(2)])
-object_viewer_btn = Button(win_root, text='3D 모델 보기', command=lambda: [delete_log_in_page(3)])
+object_viewer_btn = Button(win_root, text='스도쿠 게임하기', command=lambda: [delete_log_in_page(3)])
 
 
 def set_log_in_page(user_name):
@@ -41,4 +41,4 @@ def delete_log_in_page(next_page):
         case 2:
             mc.mail_creater.set_mc(save_name)
         case 3:
-            oc.obj_viewer.set_ov(save_name)
+            sp.sudoku_creater.set_sp(save_name)

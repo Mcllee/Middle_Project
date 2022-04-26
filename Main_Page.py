@@ -19,11 +19,13 @@ Sign_Up_btn = Button(win_root, text='회원가입', command=lambda: all_delete_m
 Log_in_btn = Button(win_root, text='로그인', command=lambda: all_delete_main(2))
 log_Out_btn = Button(win_root, text='로그아웃', command=lambda: [
                                                 id_in_txt.delete(0, END),
+                                                id_in_txt.insert(0, "아이디"),
                                                 pasw_in_txt.delete(0, END),
+                                                pasw_in_txt.insert(0, "비밀번호"),
                                                 msgbox.showinfo("로그아웃", "정상적으로 로그아웃이 실행되었습니다.")])
 Qite_btn = Button(win_root, text='종료', command=lambda: quit())
-forward_page_btn = Button(win_root, text='앞으로', command=lambda: all_delete_main(3))
-back_page_btn = Button(win_root, text='뒤로가기', command=lambda: all_delete_main(3))
+forward_page_btn = Button(win_root, text='앞으로')
+back_page_btn = Button(win_root, text='뒤로가기')
 page_address = Entry(win_root, width=800)
 Main_page_btn = Button(win_root, text='⌂', command=lambda: [sp.delete_sp(),
                                                             sup.delete_all_sign_up(),
@@ -87,8 +89,8 @@ def Main_Page_set():
     page_address.delete(0, END)
     page_address.insert(0, 'https://www.Krome.com')
     # 페이지 이동버튼 재설정
-    forward_page_btn.config(command=lambda: all_delete_main(3))
-    back_page_btn.config(command=lambda: all_delete_main(3))
+    forward_page_btn.config(command=lambda: None)
+    back_page_btn.config(command=lambda: None)
 
     # 회원정보 입력 초기화
     id_in_txt.delete(0, END)
