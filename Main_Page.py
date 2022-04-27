@@ -49,13 +49,11 @@ def all_delete_main(page_num):
         case 2:
             if id_in_txt.get() != '아이디':
                 try:
-                    input_name = uif[id_in_txt.get()]   # shelve모듈을 이용해 입력된 정보 찾기
-                    if input_name == '비밀번호':          # 입력된 정보가 없을 경우 KeyError를 발생시킨다.
+                    user_pw = uif[id_in_txt.get()][0]   # shelve모듈을 이용해 입력된 정보 찾기
+                    if user_pw == '비밀번호':          # 입력된 정보가 없을 경우 KeyError를 발생시킨다.
                         raise KeyError
                     else:                               # 제대로된 정보가 존재할 경우
-                        lip.set_log_in_page(id_in_txt.get())
-                        forward_page_btn.place_forget()
-                        back_page_btn.place_forget()
+                        lip.set_log_in_page(uif[id_in_txt.get()][1])
                 except KeyError:                        # 정상적인 정보가 아닐 경우
                     msgbox.showinfo("로그인 오류", "잘못된 아이디 혹은 비밀번호 입니다!")
                     Main_Page_set()

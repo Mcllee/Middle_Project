@@ -14,12 +14,12 @@ object_viewer_btn = Button(win_root, text='스도쿠 게임하기', command=lamb
 
 def set_log_in_page(user_name):
     global save_name
-    save_name = user_name   # delete에서 다른 페이지로 넘어갈 때 넘겨준다.
+    save_name = str(user_name)   # delete에서 다른 페이지로 넘어갈 때 넘겨준다.
 
     # 위젯 배치 설정
-    file_btn.place(x=430, y=500, width=140, height=40)
-    mail_btn.place(x=430, y=550, width=140, height=40)
-    object_viewer_btn.place(x=430, y=600, width=140, height=40)
+    file_btn.place(x=150, y=450, width=200, height=60)
+    mail_btn.place(x=400, y=450, width=200, height=60)
+    object_viewer_btn.place(x=650, y=450, width=200, height=60)
     # 주소창 초기화
     mp.page_address.delete(0, END)
     mp.page_address.insert(0, '...//어서오세요! ' + str(user_name) + '님! 원하시는 작업을 선택해주세요!')
@@ -27,11 +27,15 @@ def set_log_in_page(user_name):
     mp.back_page_btn.config(command=lambda: [delete_log_in_page(0)])
     mp.forward_page_btn.config(command=DISABLED)
 
+    mp.bg_image.place(x=200, y=50)
+
 
 def delete_log_in_page(next_page):
     file_btn.place_forget()
     mail_btn.place_forget()
     object_viewer_btn.place_forget()
+
+    mp.bg_image.place_forget()
 
     match(next_page):
         case 0:

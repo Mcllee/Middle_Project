@@ -36,6 +36,7 @@ def delete_sp():
     level_1_btn.place_forget()
     level_2_btn.place_forget()
     level_3_btn.place_forget()
+    back_line.place_forget()
     lip.set_log_in_page(lip.save_name)
 
 

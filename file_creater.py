@@ -17,7 +17,7 @@ menu_file = Menu(menu, tearoff=False)
 
 def delete_fc(next_page):
     memo_txt.place_forget()
-    menu_file.delete(0, END)
+    menu_file.place_forget()
     win_root.config(menu=False)
 
     match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
@@ -100,10 +100,12 @@ class file_creater:
 
         memo_txt.place(x=100, y=100)
 
-        menu_file.add_command(label='불러오기', command=open_file, accelerator='Ctrl+O')
-        menu_file.add_command(label='저장하기', command=save_file, accelerator='Ctrl+S')
-        menu_file.add_separator()
-        menu_file.add_command(label='종료', command=lambda: [delete_fc(1)], accelerator='Ctrl+Q')
-        menu.add_cascade(label='File', menu=menu_file)
-
+        win_root.config(menu=None)
         win_root.config(menu=menu)
+
+
+menu_file.add_command(label='불러오기', command=open_file, accelerator='Ctrl+O')
+menu_file.add_command(label='저장하기', command=save_file, accelerator='Ctrl+S')
+menu_file.add_separator()
+menu_file.add_command(label='종료', command=lambda: [delete_fc(1)], accelerator='Ctrl+Q')
+menu.add_cascade(label='File', menu=menu_file)

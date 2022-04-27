@@ -11,10 +11,11 @@ back_page_btn = Button(win_root, text='앞으로', command=DISABLED)
 page_address = Entry(win_root, width=800)
 new_id_ent = Entry(win_root, width=800)
 new_pd_ent = Entry(win_root, width=800)
+new_name_ent = Entry(win_root, width=800)
 create_in_btn = Button(win_root, text="회원가입", bg='yellow', fg='black')
 
-def make_new_inf():
-    mp.uif[new_id_ent.get()] = new_pd_ent.get()
+def make_new_inf():  # 회원 정보 저장
+    mp.uif[new_id_ent.get()] = [new_pd_ent.get(), new_name_ent.get()]
 
 
 def delete_all_sign_up():
@@ -25,6 +26,7 @@ def delete_all_sign_up():
 
     new_id_ent.place_forget()
     new_pd_ent.place_forget()
+    new_name_ent.place_forget()
     create_in_btn.place_forget()
 
 
@@ -39,8 +41,12 @@ def set_sign_up_page():
     back_page_btn.place(x=60, y=0, width=60, height=30)
     page_address.place(x=120, y=0, width=840, height=30)
 
+    new_id_ent.insert(0, "아이디를 입력해주세요.")
     new_id_ent.place(x=350, y=255, width=300, height=40)
-    new_pd_ent.place(x=350, y=325, width=300, height=40)
+    new_pd_ent.insert(0, "비밀번호를 입력해주세요.")
+    new_pd_ent.place(x=350, y=295, width=300, height=40)
+    new_name_ent.insert(0, "닉네임을 입력해주세요.")
+    new_name_ent.place(x=350, y=335, width=300, height=40)
 
     create_in_btn.place(x=350, y=410, width=300, height=50)
 
