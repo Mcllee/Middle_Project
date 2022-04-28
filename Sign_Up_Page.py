@@ -2,6 +2,10 @@ from Window_set import *
 from file_Loader import *
 import Main_Page as mp
 
+import re
+
+checking_input = re.compile('[a-zA-Z0-9]+')
+
 # 배경 이미지
 sign_win_back_image = ImageTk.PhotoImage(Sign_Up_Image)
 bg_image = Label(win_root, image=sign_win_back_image)
@@ -13,9 +17,37 @@ new_id_ent = Entry(win_root, width=800)
 new_pd_ent = Entry(win_root, width=800)
 new_name_ent = Entry(win_root, width=800)
 create_in_btn = Button(win_root, text="회원가입", bg='yellow', fg='black')
+sign_in_btn = Button(win_root, text="로그인", bg='white', relief="flat", fg='goldenrod3',
+                                command=lambda: [delete_all_sign_up(), mp.Main_Page_set()])
+overlap_btn = Button(win_root, text="중복확인", bg='white', relief="flat", fg='goldenrod3',
+                                command=lambda: overlap_check_uif())
+
+overlap_checker = False
+
+def overlap_check_uif():
+    global overlap_checker
+    try:
+        if mp.uif[new_id_ent.get()][0] != '':
+            msgbox.showinfo("잘못된 입력!", "이미 존재하는 아이디 입니다!")
+            overlap_checker = False
+        else:
+            raise KeyError
+    except KeyError:
+        overlap_checker = True
+        msgbox.showinfo("중복확인", "중복이 존재하지 않는 아이디 입니다!")
+
 
 def make_new_inf():  # 회원 정보 저장
-    mp.uif[new_id_ent.get()] = [new_pd_ent.get(), new_name_ent.get()]
+    global overlap_checker
+    if overlap_checker is False:
+        msgbox.showinfo("아이디 중복확인", "아이디의 중복을 확인해주세요!")
+    elif checking_input.findall(new_id_ent.get()) and checking_input.findall(new_pd_ent.get()):
+        mp.uif[new_id_ent.get()] = [new_pd_ent.get(), new_name_ent.get(), 0]    # 3번째는 스도쿠 최고 점수
+        msgbox.showinfo("회원가입 성공!", "회원가입이 정상적으로 진행되었습니다!")
+    else:
+        msgbox.showinfo("잘못된 입력", "아이디 혹은 비밀번호는\n소문자, 대문자, 숫자만 입력해주세요.")
+        new_id_ent.delete(0, END)
+        new_pd_ent.delete(0, END)
 
 
 def delete_all_sign_up():
@@ -23,6 +55,9 @@ def delete_all_sign_up():
     back_page_btn.place_forget()
     bg_image.place_forget()
     page_address.place_forget()
+
+    sign_in_btn.place_forget()
+    overlap_btn.place_forget()
 
     new_id_ent.place_forget()
     new_pd_ent.place_forget()
@@ -40,6 +75,9 @@ def set_sign_up_page():
     forward_page_btn.place(x=0, y=0, width=60, height=30)
     back_page_btn.place(x=60, y=0, width=60, height=30)
     page_address.place(x=120, y=0, width=840, height=30)
+
+    sign_in_btn.place(x=560, y=195, width=100, height=30)
+    overlap_btn.place(x=460, y=225, width=100, height=20)
 
     new_id_ent.insert(0, "아이디를 입력해주세요.")
     new_id_ent.place(x=350, y=255, width=300, height=40)

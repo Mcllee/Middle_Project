@@ -12,6 +12,7 @@ main_win_back_image = ImageTk.PhotoImage(mbg_image)
 bg_image = Label(win_root, image=main_win_back_image)
 # 사용자 이름 저장 문자열
 user_name = ''
+user_id = ''
 # 윈도우 위젯 선언
 id_in_txt = Entry(win_root)
 pasw_in_txt = Entry(win_root)
@@ -34,6 +35,7 @@ Main_page_btn = Button(win_root, text='⌂', command=lambda: [sp.delete_sp(),
 
 def all_delete_main(page_num):
     global user_name
+    global user_score
 
     bg_image.place_forget()
     id_in_txt.place_forget()
@@ -50,7 +52,7 @@ def all_delete_main(page_num):
             if id_in_txt.get() != '아이디':
                 try:
                     user_pw = uif[id_in_txt.get()][0]   # shelve모듈을 이용해 입력된 정보 찾기
-                    if user_pw == '비밀번호':          # 입력된 정보가 없을 경우 KeyError를 발생시킨다.
+                    if user_pw == '비밀번호':            # 입력된 정보가 없을 경우 KeyError를 발생시킨다.
                         raise KeyError
                     else:                               # 제대로된 정보가 존재할 경우
                         lip.set_log_in_page(uif[id_in_txt.get()][1])
@@ -59,8 +61,6 @@ def all_delete_main(page_num):
                     Main_Page_set()
             else:                                       # 엔트리에 입력된 정보가 없을 경우
                 lip.set_log_in_page('아이디를 잊어버린 학생')
-        case 3:
-            sp.sudoku_creater.set_sp(user_name)
 
 
 def Main_Page_set():

@@ -24,6 +24,8 @@ level_3_btn = Button(win_root, text="Level 3", command=lambda: new_game(3))
 
 back_line = Canvas(win_root, width=550, height=550, bg="white")
 
+best_score = Label(win_root)
+
 
 def delete_sp():
     for hei in range(0, 9):
@@ -37,6 +39,7 @@ def delete_sp():
     level_2_btn.place_forget()
     level_3_btn.place_forget()
     back_line.place_forget()
+    best_score.place_forget()
     lip.set_log_in_page(lip.save_name)
 
 
@@ -121,6 +124,8 @@ def check_game():
 
     if success == quest:
         msgbox.showinfo("성공!", "정답입니다!\n축하합니다!")
+        mp.uif[mp.id_in_txt.get()][2] = 10
+        print(mp.uif[mp.id_in_txt.get()][2])
     else:
         msgbox.showinfo("실패!", f"아쉽군요! {success}개만 정답입니다.\n다시 도전하세요!")
 
@@ -139,6 +144,8 @@ class sudoku_creater:
 
     @staticmethod
     def set_sp(input_name):
+        best_score.config(text="최고점: " + str(mp.uif[mp.id_in_txt.get()][2]))
+
         User_name = input_name
         mp.page_address.delete(0, END)
         mp.page_address.insert(0, f"스도쿠 게임을 시작합니다! {User_name}님!")
@@ -169,3 +176,5 @@ class sudoku_creater:
         back_line.create_line(370, -1200, 370, 1200, fill="black", width="5")
 
         back_line.place(x=80, y=100)
+
+        best_score.place(x=720, y=100)
