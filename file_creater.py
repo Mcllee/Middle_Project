@@ -1,5 +1,6 @@
 from Window_set import *    # 기본 윈도우 파일
 from tkinter import filedialog
+from tkinter import *
 
 import Main_Page as mp      # 메인 페이지 파일
 import Log_in_Page as lip   # 로그인 페이지 파일
@@ -8,16 +9,23 @@ import docx
 from docx import Document   # 워드 저장
 import datetime             # 텍스트 현재시간 기록
 import os                   # 파일 디렉토리 접근
+from tkinter.scrolledtext import ScrolledText
 
+# 폰트 생성
+sdFont = tkFont.Font(family="Arial", size=15, weight="bold")
 
-memo_txt = Text(win_root, width=115, height=40)
+# 윈도우 위젯 선언
+message_text_frame = LabelFrame(win_root, text='파일 내용', width=905, height=630, bg="gray", font=sdFont)
+memo_txt = ScrolledText(message_text_frame, width=78, height=24, font=sdFont)
 menu = Menu()
 menu_file = Menu(menu, tearoff=False)
 
 
+# 파일 생성 페이지 제거 함수
 def delete_fc(next_page):
     memo_txt.place_forget()
     menu_file.place_forget()
+    message_text_frame.place_forget()
     win_root.config(menu=False)
 
     match (next_page):  # 이동 횟수(깊이)에 따라 넘버링
@@ -25,8 +33,20 @@ def delete_fc(next_page):
             lip.set_log_in_page(lip.save_name)
         case 2:
             mp.Main_Page_set()
+        case 3:
+            try:
+                mp.page_list.pop(-1)
+                move_to = mp.page_list[-1]
+                mp.page_list.pop(-1)
+
+                match move_to:
+                    case "Log_in":
+                        lip.set_log_in_page(lip.save_name)
+            except IndexError:
+                print("범위 오류")
 
 
+# 파일 저장 함수
 def save_file():
     file_name = filedialog.asksaveasfile(parent=win_root, title="파일 선택기",
                                          defaultextension=".*",
@@ -56,6 +76,7 @@ def save_file():
             save_text.close()
 
 
+# 파일 불러오기 함수
 def open_file():
     file_name = filedialog.askopenfilename(title='select a text file',
                                            filetypes=(("텍스트 파일(.txt)", "*.txt"),
@@ -87,23 +108,30 @@ def open_file():
                 memo_txt.insert(END, paragraph.text)
 
 
+# 파일 생성 페이지 생성함수
 class file_creater:
     #  윈도우 위젯 선언
 
     @staticmethod
     def set_fc(input_name):
+        mp.page_list.append("File")
+
         mp.page_address.delete(0, END)
         mp.page_address.insert(0, f"파일 제작소에 어서오세요! {input_name}님!")
 
         mp.back_page_btn.config(command=lambda: [delete_fc(1)])
-        mp.forward_page_btn.config(command=DISABLED)
+        mp.Main_page_btn.config(command=lambda: [delete_fc(2)])
+        mp.forward_page_btn.config(command=lambda: [delete_fc(3)])
 
-        memo_txt.place(x=100, y=100)
+        message_text_frame.place(x=50, y=50)
+        memo_txt.delete("1.0", END)
+        memo_txt.place(x=10, y=10)
 
         win_root.config(menu=None)
         win_root.config(menu=menu)
 
 
+# menu 위젯 추가
 menu_file.add_command(label='불러오기', command=open_file, accelerator='Ctrl+O')
 menu_file.add_command(label='저장하기', command=save_file, accelerator='Ctrl+S')
 menu_file.add_separator()
