@@ -58,7 +58,7 @@ def set_log_in_page(user_name):
     if len(mp.page_list) <= 2:
         mp.forward_page_btn.config(state=DISABLED)
     else:
-        mp.forward_page_btn.config(state=NORMAL, command=lambda: [move_page])
+        mp.forward_page_btn.config(state=NORMAL, command=move_page)
 
     mp.bg_image.place(x=160, y=50)
 

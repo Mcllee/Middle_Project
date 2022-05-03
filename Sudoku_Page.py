@@ -107,7 +107,7 @@ def new_game(input_level):
 
     match level:
         case 1:
-            for i in range(10):
+            for i in range(4):
                 quest_position.append([random.randint(0, 8), random.randint(0, 8)])
         case 2:
             for i in range(20):
@@ -154,8 +154,6 @@ def check_game():
 
     if success == quest:
         msgbox.showinfo("성공!", "정답입니다!\n축하합니다!")
-        mp.uif[mp.id_in_txt.get()][2] = 10
-        print(mp.uif[mp.id_in_txt.get()][2])
     else:
         msgbox.showinfo("실패!", f"아쉽군요! {success}개만 정답입니다.\n다시 도전하세요!")
 
